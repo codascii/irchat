@@ -110,10 +110,19 @@ public class Interpreteur {
 					
 				} else if (commandeSend.equals(CMD_CHANNELS)) {
 					try {
-						List<String> channels = daom.getChannels();
-						//	TODO Envoyer la liste des channels
+						List<String> channels = daom.getChannels();						
+						String messageToSend = "{\"channels\" : [\"";//#Dota2\",\"#Minecraft\",\"#LoL\"]}";
+						
+						for(String ss : channels) {
+							messageToSend = messageToSend + ss + "\",\"";
+						}
+						
+						messageToSend += "]}";
+
+						// Elever la dernière virgule avant d'envoyer les channels
+						
+						MainServeur.sendMessage(messageToSend, s);
 					} catch (DAOException e) {
-						// TODO Erreur lors de la récupération des channels
 						e.printStackTrace();
 					}
 				} else {

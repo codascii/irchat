@@ -25,13 +25,6 @@ import model.dao.DAOFactory;
 import model.dao.DAOMessage;
 import model.dao.exceptions.DAOException;
 
-/**
- * 
- * @author Mohamed HOUMADI
- * @date   2017/11/25
- *
- */
-
 public class ServerFrame extends JFrame {
 
 	private static final long serialVersionUID = -7319784823079373838L;
