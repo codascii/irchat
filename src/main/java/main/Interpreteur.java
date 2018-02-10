@@ -101,20 +101,25 @@ public class Interpreteur {
 					}
 
 				} else if (commandeSend.equals(CMD_QUIT)) {
-					
+					MainServeur.sendMessage("T'as envoyé la commande #QUIT", s);
 				} else if (commandeSend.equals(CMD_JOIN)) {
-					
+					MainServeur.sendMessage("T'as envoyé la commande #JOIN", s);
 				} else if (commandeSend.equals(CMD_MSG)) {
-					
+					MainServeur.sendMessage("T'as envoyé la commande #MSG", s);
 				} else if (commandeSend.equals(CMD_EXIT)) {
-					
+					MainServeur.sendMessage("T'as envoyé la commande #EXIT", s);
 				} else if (commandeSend.equals(CMD_CHANNELS)) {
 					try {
 						List<String> channels = daom.getChannels();						
 						String messageToSend = "{\"channels\" : [\"";//#Dota2\",\"#Minecraft\",\"#LoL\"]}";
 						
 						for(String ss : channels) {
-							messageToSend = messageToSend + ss + "\",\"";
+							;
+							if(!channels.get(channels.size() - 1).equals(ss)) {
+								messageToSend = messageToSend + ss + "\",\"";
+							} else {
+								messageToSend = messageToSend + ss + "\"";
+							}
 						}
 						
 						messageToSend += "]}";
