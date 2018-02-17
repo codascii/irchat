@@ -196,9 +196,9 @@ public class DAOMessage extends DAO<Message> {
 		try {
 			st = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			st.setInt(1, obj.getUser_id());
-			st.setDate(2, obj.getDate());
-			st.setString(3, obj.getContent());
-			st.setString(4, obj.getChan());
+			st.setDate(2, (java.sql.Date)obj.getDate());
+			st.setString(3, obj.getChan());
+			st.setString(4, obj.getContent());
 			st.executeUpdate();
 			
 			r = st.getGeneratedKeys();
@@ -223,7 +223,7 @@ public class DAOMessage extends DAO<Message> {
 		try {
 			st = connect.prepareStatement(sql);
 			st.setInt(1, obj.getUser_id());
-			st.setDate(2, obj.getDate());
+			st.setDate(2, (java.sql.Date)obj.getDate());
 			st.setString(3,obj.getContent());
 			st.setString(4, obj.getChan());
 			st.setInt(5, obj.getId());

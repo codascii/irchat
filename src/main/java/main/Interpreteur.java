@@ -19,16 +19,16 @@ import model.dao.exceptions.DAOException;
 
 public class Interpreteur {
 	
-	private static Pattern pattern;
-	private static Matcher matcher;
+	//private static Pattern pattern;
+	//private static Matcher matcher;
 	
-	private static String CMD_CONNECT;
-	private static String CMD_QUIT;
-	private static String CMD_JOIN;
-	private static String CMD_MSG;
-	private static String CMD_EXIT;
-	private static String CMD_CHANNELS;
-	private static Connection c = null;
+	public static String CMD_CONNECT;
+	public static String CMD_QUIT;
+	public static String CMD_JOIN;
+	public static String CMD_MSG;
+	public static String CMD_EXIT;
+	public static String CMD_CHANNELS;	
+	public static Connection c = null;
 	
 	private String commandeSend;
 	private DAOUser daou = null;
@@ -58,7 +58,19 @@ public class Interpreteur {
 		commandeSend = new String("DEFAULT COMMANDE");
 	}
 	
-	public void interpreter(String message, Socket s) {
+	public static boolean commandFind(String cmd) {
+		
+		if(cmd != null) {
+			final Pattern pattern = Pattern.compile("^(((#CONNECT|#JOIN)\\s[\\w]+)|((#QUIT|#EXIT)((\\s){1}[\\w\\W]*)?)|(#MSG(\\s){1}[\\w\\W]+)|#CHANNELS)$");
+			final Matcher matcher = pattern.matcher(cmd);
+			
+			return (matcher.find()) ? true : false;
+		} else {
+			return false;
+		}
+	}
+	
+	/*public void interpreter(String message, Socket s) {
 		if(message != null) {
 			pattern = Pattern.compile("^(((#CONNECT|#JOIN)\\s[\\w]+)|((#QUIT|#EXIT)((\\s){1}[\\w\\W]*)?)|(#MSG(\\s){1}[\\w\\W]+)|#CHANNELS)$");
 			matcher = pattern.matcher(message);
@@ -68,6 +80,7 @@ public class Interpreteur {
 					
 				if(commandeSend.equals(CMD_CONNECT) ) {
 					
+					//	Prend tout les caractères à partir du neuvième.
 					final String pseudo = message.substring(9);
 					User user = new User(pseudo);
 
@@ -114,7 +127,6 @@ public class Interpreteur {
 						String messageToSend = "{\"channels\" : [\"";//#Dota2\",\"#Minecraft\",\"#LoL\"]}";
 						
 						for(String ss : channels) {
-							;
 							if(!channels.get(channels.size() - 1).equals(ss)) {
 								messageToSend = messageToSend + ss + "\",\"";
 							} else {
@@ -137,6 +149,6 @@ public class Interpreteur {
 				System.out.println("Erreur de commande !!");
 			}
 		}
-	}
+	}*/
 	
 }

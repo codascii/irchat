@@ -6,11 +6,14 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 public class MainServeur extends Thread {
 	private static final Logger LOG = Logger.getLogger(MainServeur.class.getName());
+	public static final List<CChatteur> CLIENT_LIST = new LinkedList<>();
 	
 	private ServerSocket server = null;
 	private Socket clientSocket = null;
@@ -62,10 +65,9 @@ public class MainServeur extends Thread {
 		   
 		   bw.write(msg);
 		   bw.flush();
-		   System.out.println("Message envoyé: " + msg);
 		   
 		  } catch (IOException e) {
-		   System.out.println("Problème de communication: " + e);
+		   
 		   e.printStackTrace();
 		  } 
 	}
@@ -76,7 +78,6 @@ public class MainServeur extends Thread {
 		try {
 			server = new ServerSocket(6667);
 			LOG.info("Start Socket Server on port : " + 6667);
-
 			while (isStarted) {
 				clientSocket = server.accept();
 				new ClientThread(clientSocket).start();

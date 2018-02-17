@@ -42,7 +42,7 @@ public class TheServer {
 					String s = br.readLine();
 					
 					while (s != null) {
-						System.out.println(s);
+						
 						s = br.readLine();
 					}
 					

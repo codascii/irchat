@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import main.MainServeur;
 import model.beans.Message;
@@ -39,6 +42,7 @@ public class ServerFrame extends JFrame {
 	private JTextArea logsArea;
 	private JButton btStart;
 	private JButton btStop;
+	private JButton btRefresh;
 	private List<Message> logs;
 	private MainServeur server = null;
 	
@@ -100,6 +104,11 @@ public class ServerFrame extends JFrame {
 		this.jtfIdUser.setBounds(260, 10, 100, 25);
 		this.jtfIdUser.setForeground(Color.GRAY);
 		this.app_container.add(this.jtfIdUser);
+		
+		//
+		this.btRefresh = new JButton("Actualiser");
+		this.btRefresh.setBounds(400, 10, 120, 25);
+		this.app_container.add(this.btRefresh);
 		
 		// Ajout de la zone d'affichage des logs dans un scroll pane
 		this.logsArea = new JTextArea();
@@ -185,6 +194,22 @@ public class ServerFrame extends JFrame {
 				} catch(DAOException ex) {
 					JOptionPane.showMessageDialog(new JFrame(), "Aucune trace d'un message avec l'identifiant utilisateur saisie.", 
 							"IRC : Erreur de type de données", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		
+		this.btRefresh.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				final String itemSelected = (String) cbChannels.getSelectedItem();
+				
+				try {
+					logs = ServerFrame.daom.findByChan(itemSelected);
+					showLogs();
+				} catch (DAOException e1) {
+					e1.printStackTrace();
 				}
 				
 			}

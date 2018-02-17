@@ -146,6 +146,23 @@ public class DAOUser extends DAO<User>{
 		}
 	}
 	
+	public User updateLast_co(User us) throws DAOException {
+		final String sql ="UPDATE `user` SET `last_co` = NOW() WHERE `username`=?";
+		PreparedStatement st = null;
+		ResultSet r = null;
+		try {
+			st = connect.prepareStatement(sql);
+			st.setString(1, us.getPseudo());
+			st.executeUpdate();
+			return us;
+		} catch(SQLException e) {
+			throw new DAOException("Error during dao manip'");
+		} finally {
+			DAOUtils.close(r);
+			DAOUtils.close(st);
+		}
+	}
+	
 	@Override
 	public void delete(User us) throws DAOException {
 		final String sql = "DELETE FROM `user` WHERE `id`= ? ";
